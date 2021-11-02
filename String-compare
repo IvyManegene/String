@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<stdlib.h>
+#include<string.h>
+float get_tax(float salary,char gender[10]);
+void main()
+{
+    float  the_salary, the_tax, the_net_pay ;
+    char the_gender[10];
+    char lower_gender[10];
+    int i, the_length;
+    
+get_gender: 
+    printf("Please enter your gender: ");
+    gets(the_gender);
+   
+    fflush(stdin);
+    
+    the_length = strlen(the_gender);
+    
+    for (i = 0; i < the_length; i++)
+    {
+        lower_gender[i] = (tolower(the_gender[i]));
+    }
+    
+    if ( strcmp(lower_gender, "male") == 0 || strcmp(lower_gender, "female") == 0)
+        goto get_salary;                
+    else
+    {
+                system("cls");
+                printf("\a\a\aYou can only chose  male or female.\n\n");
+                goto get_gender;
+    }
+                         
+  //  fflush(stdin);
+    
+get_salary:        
+    printf("Please enter your amount earned: ");
+    scanf("%f",&the_salary);
+    
+    if(the_salary < 0)
+    {
+        system("cls");
+        printf("\a\a\aSalary cannot be negative.\n\n");
+        goto get_salary;
+    }
+    
+    the_tax = get_tax(the_salary,lower_gender);
+    the_net_pay = the_salary - the_tax;
+    
+    printf("\nThe basic salary is: %.2f\nTax Amount = %.2f\nNet Salary = %.2f\n\n",the_salary,  the_tax, the_net_pay);     
+}
+
+float get_tax(float salary,char gender[10])
+{
+        
+    float tax_amount;
+    
+   // printf("\n\nGender = %s\nFemale = %d\nMale = %d\n\n",gender, strcmp(gender,"female"),strcmp(gender,"male"));//To be used for explanation
+    
+    if(strcmp(gender,"female") == 0)//strcmp returns 0 when the strings are the same and a non zero otherwise
+    {
+        if (salary >= 15000)
+            tax_amount = 14.0/100 * salary;
+        else
+            tax_amount = 12.0/100 * salary;
+    }
+    else if (strcmp(gender,"male") == 0)
+    {
+        if (salary >= 14000)
+            tax_amount = 15.0/100 * salary;
+        else
+            tax_amount = 13.0/100 * salary;
+    }
+    
+    return (tax_amount);
+}
+
